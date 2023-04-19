@@ -10,15 +10,13 @@ const Slider = () => {
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
     new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
   );
-  const nextCard = () => {
-    setTimeout(
+  useEffect(() => {
+    const nextCard = setTimeout(
       () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0),
       5000
     );
-  };
-  useEffect(() => {
-    nextCard();
-  });
+    return () => clearTimeout(nextCard);
+  }, [index, byDateDesc]);
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
